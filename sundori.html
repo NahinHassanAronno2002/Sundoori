@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Shundori Crissy! 🎂</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Poppins:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffb3d9 0%, #ffd1dc 50%, #ffe4e6 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(255, 182, 193, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 192, 203, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(255, 228, 225, 0.3) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            max-width: 90vw;
+        }
+        
+        .step {
+            display: none;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .step.active {
+            display: block;
+        }
+        
+        .birthday-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #ffc0cb, #ff69b4);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite, bounce 2s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .birthday-title::before {
+            content: '🎀 ✨ 🌸 ✨ 🎀';
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            animation: float 2s ease-in-out infinite;
+        }
+        
+        .birthday-title::after {
+            content: '💕 🌟 💖 🌟 💕';
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            animation: float 2s ease-in-out infinite reverse;
+        }
+        
+        .age-container {
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(4rem, 12vw, 8rem);
+            margin: 2rem 0;
+        }
+        
+        .age-22 {
+            color: #ff6b6b;
+            animation: pulse 1s ease-in-out;
+        }
+        
+        .age-16 {
+            color: #feca57;
+            animation: sparkleIn 1.5s ease-out;
+            display: none;
+        }
+        
+        .age-message {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: white;
+            margin-top: 1rem;
+            font-weight: 300;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .balloons-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .balloon {
+            font-size: 4rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 5px 10px rgba(255, 105, 180, 0.3));
+        }
+        
+        .balloon::before {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 1rem;
+            animation: twinkle 1.5s ease-in-out infinite;
+        }
+        
+        .balloon:nth-child(2) { animation-delay: 0.5s; }
+        .balloon:nth-child(3) { animation-delay: 1s; }
+        .balloon:nth-child(4) { animation-delay: 1.5s; }
+        
+        .balloon:hover {
+            transform: scale(1.2);
+        }
+        
+        .balloon-message {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            opacity: 0;
+            pointer-events: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .balloon-message.show {
+            opacity: 1;
+            animation: popIn 0.5s ease-out;
+        }
+        
+        .candle-container {
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .cake {
+            font-size: 8rem;
+            margin-bottom: 1rem;
+            position: relative;
+            filter: drop-shadow(0 10px 20px rgba(255, 105, 180, 0.3));
+        }
+        
+        .cake::before {
+            content: '🌸 🎀 🌸';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            animation: float 2s ease-in-out infinite;
+        }
+        
+        .candle {
+            font-size: 3rem;
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            animation: flicker 1s ease-in-out infinite alternate;
+        }
+        
+        .candle.blown {
+            opacity: 0;
+            animation: blowOut 0.5s ease-out;
+        }
+        
+        .wish-text {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            color: white;
+            margin: 1rem 0;
+            font-weight: 300;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .cake-cutting {
+            margin: 2rem 0;
+        }
+        
+        .cake-whole {
+            font-size: 6rem;
+            transition: all 0.8s ease;
+        }
+        
+        .cake-slice {
+            font-size: 4rem;
+            margin-left: 2rem;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+        
+        .cake-slice.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .final-card {
+            background: linear-gradient(135deg, rgba(255, 240, 245, 0.95) 0%, rgba(255, 228, 225, 0.95) 100%);
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.3);
+            max-width: 600px;
+            margin: 0 auto;
+            color: #8b4a6b;
+            line-height: 1.6;
+            border: 3px solid #ffb3d9;
+            position: relative;
+            animation: cardFloat 3s ease-in-out infinite;
+        }
+        
+        .final-card::before {
+            content: '🎀 💕 🌸 💕 🎀';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffb3d9;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .final-card::after {
+            content: '✨ 💖 ✨';
+            position: absolute;
+            bottom: -15px;
+            right: 20px;
+            font-size: 1.5rem;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+        
+        .final-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .final-card p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .signature {
+            text-align: right;
+            font-weight: 600;
+            color: #48dbfb;
+            margin-top: 2rem;
+        }
+        
+        /* Particle Effects */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: fall 3s linear infinite;
+            opacity: 0.8;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(0.8); opacity: 0; }
+        }
+        
+        @keyframes sparkleIn {
+            0% { transform: scale(0) rotate(180deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(0deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes popIn {
+            0% { transform: translateX(-50%) scale(0); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+        
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); }
+            100% { transform: translateX(-50%) scale(1.1); filter: brightness(1.2); }
+        }
+        
+        @keyframes blowOut {
+            0% { transform: translateX(-50%) scale(1); opacity: 1; }
+            100% { transform: translateX(-50%) scale(0.5); opacity: 0; }
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .click-hint {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .balloons-container {
+                gap: 1rem;
+            }
+            
+            .balloon {
+                font-size: 3rem;
+            }
+            
+            .final-card {
+                padding: 2rem;
+                margin: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <!-- Step 1: First Click -->
+        <div class="step active" id="step1">
+            <div class="birthday-title">Happy Birthday, Shundori Crissy! 🎂🎶</div>
+        </div>
+        
+        <!-- Step 2: Second Click -->
+        <div class="step" id="step2">
+            <div class="age-container">
+                <div class="age-22" id="age22">22</div>
+                <div class="age-16" id="age16">16</div>
+            </div>
+            <div class="age-message">Because with your smile, you'll always stay 16 at heart! ✨</div>
+        </div>
+        
+        <!-- Step 3: Third Click (Balloons) -->
+        <div class="step" id="step3">
+            <div class="balloons-container">
+                <div class="balloon" data-message="Joy">🎈
+                    <div class="balloon-message">Joy</div>
+                </div>
+                <div class="balloon" data-message="Laughter">🎈
+                    <div class="balloon-message">Laughter</div>
+                </div>
+                <div class="balloon" data-message="Love">🎈
+                    <div class="balloon-message">Love</div>
+                </div>
+                <div class="balloon" data-message="Dreams come true">🎈
+                    <div class="balloon-message">Dreams come true</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Step 4: Fourth Click (Blow the Candle) -->
+        <div class="step" id="step4">
+            <div class="candle-container">
+                <div class="cake">🎂</div>
+                <div class="candle" id="candle">🕯️</div>
+            </div>
+            <div class="wish-text">Make a wish, Shundori… the world's a brighter place because of you! 🌟</div>
+        </div>
+        
+        <!-- Step 5: Fifth Click (Cut the Cake) -->
+        <div class="step" id="step5">
+            <div class="cake-cutting">
+                <div class="cake-whole" id="cakeWhole">🍰</div>
+                <div class="cake-slice" id="cakeSlice">🍰</div>
+            </div>
+            <div class="age-message">Sweet moments for the sweetest girl 💕</div>
+        </div>
+        
+        <!-- Step 6: Sixth Click (Final Wish) -->
+        <div class="step" id="step6">
+            <div class="final-card">
+                <h3>💌 A Special Message</h3>
+                <p><strong>Dear Shundori Crissy,</strong></p>
+                <p>On your special day, I just want to say how amazing you are. May your year ahead be full of happiness, love, and endless adventures.</p>
+                <p>You bring so much light and joy to everyone around you, and I hope this new year of life brings you everything your heart desires.</p>
+                <div class="signature">— With all my best wishes,<br>Aronno 💚</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="click-hint" id="clickHint">Click anywhere to continue ✨</div>
+    
+    <script>
+        let currentStep = 1;
+        let balloonsPopped = 0;
+        let candleBlown = false;
+        let cakeCut = false;
+        
+        // Particle effects
+        function createParticle() {
+            const particles = ['🌸', '💕', '✨', '🎀', '💖', '🌟', '💫', '🦄', '🍰', '🎂'];
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.textContent = particles[Math.floor(Math.random() * particles.length)];
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            
+            document.getElementById('particles').appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 5000);
+        }
+        
+        // Create continuous particles
+        setInterval(createParticle, 300);
+        
+        // Handle clicks
+        document.addEventListener('click', function(e) {
+            if (currentStep === 1) {
+                // Step 1 to 2: Show age transformation
+                document.getElementById('step1').classList.remove('active');
+                document.getElementById('step2').classList.add('active');
+                
+                setTimeout(() => {
+                    document.getElementById('age22').style.display = 'none';
+                    document.getElementById('age16').style.display = 'block';
+                }, 1000);
+                
+                currentStep = 2;
+            } else if (currentStep === 2) {
+                // Step 2 to 3: Show balloons
+                document.getElementById('step2').classList.remove('active');
+                document.getElementById('step3').classList.add('active');
+                currentStep = 3;
+            } else if (currentStep === 3) {
+                // Handle balloon popping
+                if (e.target.classList.contains('balloon')) {
+                    const message = e.target.querySelector('.balloon-message');
+                    message.classList.add('show');
+                    e.target.style.animation = 'none';
+                    e.target.style.transform = 'scale(0)';
+                    balloonsPopped++;
+                    
+                    if (balloonsPopped === 4) {
+                        setTimeout(() => {
+                            document.getElementById('step3').classList.remove('active');
+                            document.getElementById('step4').classList.add('active');
+                            currentStep = 4;
+                        }, 1500);
+                    }
+                }
+            } else if (currentStep === 4) {
+                // Handle candle blowing - click anywhere in step 4
+                if (!candleBlown) {
+                    document.getElementById('candle').classList.add('blown');
+                    candleBlown = true;
+                    
+                    // Create sparkle effect
+                    for (let i = 0; i < 15; i++) {
+                        setTimeout(() => createParticle(), i * 100);
+                    }
+                    
+                    setTimeout(() => {
+                        document.getElementById('step4').classList.remove('active');
+                        document.getElementById('step5').classList.add('active');
+                        currentStep = 5;
+                    }, 1500);
+                }
+            } else if (currentStep === 5) {
+                // Handle cake cutting - click anywhere in step 5
+                if (!cakeCut) {
+                    document.getElementById('cakeSlice').classList.add('show');
+                    cakeCut = true;
+                    
+                    // Create extra sparkles for cake cutting
+                    for (let i = 0; i < 20; i++) {
+                        setTimeout(() => createParticle(), i * 50);
+                    }
+                    
+                    setTimeout(() => {
+                        document.getElementById('step5').classList.remove('active');
+                        document.getElementById('step6').classList.add('active');
+                        document.getElementById('clickHint').style.display = 'none';
+                        currentStep = 6;
+                    }, 2000);
+                }
+            } else if (currentStep === 6) {
+                // Final step - just create more particles when clicked
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => createParticle(), i * 100);
+                }
+            }
+        });
+        
+        // Background music simulation (visual feedback only due to audio limitations)
+        setTimeout(() => {
+            document.body.style.animation = 'none';
+        }, 1000);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97cefaadc62fd058',t:'MTc1NzUwNzg3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
